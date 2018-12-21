@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<body>
+
+<div th:object="${user}">
+    <span th:text="*{id}"></span><br/>
+    <span th:text="'nickname:' + *{username}"></span><br/>
+    <span th:text="|email: ${user.email}|"></span><br/>
+    <span th:if="${user.isAdmin}">超级管理员</span><br/>
+    <span th:unless="${user.isAdmin == true}">普通用户</span><br/>
+    <span> [[${#dates.format(user.birthday,'yyyy-MM-dd HH:mm:ss')}]] </span><br/>
+    <table border="1px" >
+        <tr> <td>index</td> <td>id</td> <td>name</td> <td>length</td></tr>
+        <tr th:each="item, stat : ${user.fans}" th:style="'background-color:' + ${stat.even == true ? 'bisque' : 'gray'}">
+            <td>[[${stat.index}]]</td>
+            <td>[[${item.id}]]</td>
+            <td>
+                <a th:href="@{/fans/{id}(id=${item.id})}">[[${item.name}]]</a>
+            </td>
+            <td>[[${#strings.length(user.username)}]]</td>
+        </tr>
+    </table>
+</div>
+<br/>
+</body>
+</html>
